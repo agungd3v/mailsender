@@ -7,7 +7,7 @@ const readDoc = file => {
     ]
     let bracket = []
     
-    if (!ArrayBuffer.isView(file.data)) return { status: false, message: "is not buffer" }
+    if (!ArrayBuffer.isView(file.data)) return { status: false, message: "is not a buffer" }
     if (file.mimetype != allowType[0]) return { status: false, message: "file not allowed" }
 
     const fileData = XLSX.read(file.data)
@@ -16,7 +16,7 @@ const readDoc = file => {
     foundSheet.forEach((el, it) => {
       XLSX.utils.sheet_to_json(
         fileData.Sheets[foundSheet[it]]
-      ).map(data => bracket.push(data.email))
+      ).map(data => { if (data.email != null) return bracket.push(data.email) })
     })
 
     return { status: true, message: bracket }

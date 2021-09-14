@@ -9,6 +9,8 @@ const bulk = async (authorization, from, to, subject, message) => {
 
     if (!from) return { status: false, message: "Please enter the sender of the message" }
     if (!to) return { status: false, message: "Please enter the purpose email of your message" }
+    if (!Array.isArray(to)) return { status: false, message: "You need the array purpose email of your message" }
+    if (to.length < 1) return { status: false, message: "Empty the purpose email of your message" }
     if (!subject) return { status: false, message: "Please enter subject for message" }
 
     to.map(reciver => {
