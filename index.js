@@ -12,4 +12,6 @@ app.use(requestFile())
 const router = require("./routes")
 
 app.use(router)
-app.listen(process.env.APP_PORT)
+const server = app.listen(process.env.APP_PORT)
+
+socket = require("./plugins/socket")(server)

@@ -5,16 +5,25 @@ const MailController = {
   index: async (req, res) => {
     return res.json({
       status: true,
-      message: "ok"
+      message: 'Socket on'
     })
   },
   read: async (req, res) => {
     try {
       if (req.files) {
+        const { auth, from, subject, message } = req.body
         const readFile = await readDoc(req.files.doc)
         
         if (!readFile.status) return res.json(readFile)
-        return res.json(readFile)
+        if (readFile.status && readFile.message.length > 0) {
+          const sendBulk = await bulk(auth, from, readFile.message, subject, message)
+          return res.json(sendBulk)
+        } else {
+          return res.json({
+            status: false,
+            message: "Email tujuan tidak di temukan"
+          })
+        }
       }
       return res.json({
         status: false,

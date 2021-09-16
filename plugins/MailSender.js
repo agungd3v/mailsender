@@ -20,6 +20,7 @@ const bulk = async (authorization, from, to, subject, message) => {
         subject: subject,
         html: message
       }, error => {
+        // socket here
         if (error) return { status: false, message: "Error sending blast" }
         return { status: true, message: "Complete sending blast" }
       })

@@ -15,7 +15,9 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-fileupload": "^1.2.1",
+    "http": "0.0.1-security",
     "nodemailer": "^6.6.3",
+    "socket.io": "^4.2.0",
     "xlsx": "^0.17.1"
   },
   "devDependencies": {
