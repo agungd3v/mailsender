@@ -12,19 +12,8 @@ const bulk = async (authorization, from, to, subject, message) => {
     if (!Array.isArray(to)) return { status: false, message: "You need the array purpose email of your message" }
     if (to.length < 1) return { status: false, message: "Empty the purpose email of your message" }
     if (!subject) return { status: false, message: "Please enter subject for message" }
-
-    to.map(reciver => {
-      transporter.sendMail({
-        from: `${from} <${authorization.user}>`,
-        to: reciver,
-        subject: subject,
-        html: message
-      }, error => {
-        // socket here
-        if (error) return { status: false, message: "Error sending blast" }
-        return { status: true, message: "Complete sending blast" }
-      })
-    })
+    
+    return transporter
   } catch (error) {
     return { status: false, message: "Error: " + error }
   }

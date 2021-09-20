@@ -9,9 +9,17 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(requestFile())
 
+const http = require('http').createServer(app)
+const socket = require("socket.io")(http, {
+  cors: {
+    origin: "*",
+    methods: ['GET', 'POST']
+  }
+})
+
+app.socket = socket
+
 const router = require("./routes")
 
 app.use(router)
-const server = app.listen(process.env.APP_PORT)
-
-socket = require("./plugins/socket")(server)
+http.listen(process.env.APP_PORT)
