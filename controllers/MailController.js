@@ -3,23 +3,23 @@ const { bulk } = require('../plugins/MailSender')
 
 const MailController = {
   index: (req, res) => {
+    return res.json({
+      status: true,
+      message: "no page found here!"
+    })
     // req.app.socket.emit('knexx', 'hello from controller')
   },
   read: async (req, res) => {
     try {
       if (req.files.doc) {
-        const socket = req.app.socket
         const { auth, from, subject, message } = req.body
         const readFile = await readDoc(req.files.doc)
         
         if (!readFile.status) return res.json(readFile)
         if (readFile.status && readFile.message.length > 0) {
-          let emails = readFile.message.length
-          socket.emit('manyemail', emails)
           const authJSON = JSON.parse(auth)
           const sendBulk = await bulk(authJSON, from, readFile.message, subject, message)
           readFile.message.forEach(reciver => {
-            socket.emit('sendprogress', emails--)
             sendBulk.sendMail({
               from: `${from} <${authJSON.user}>`,
               to: reciver,
