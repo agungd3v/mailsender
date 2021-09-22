@@ -18,8 +18,6 @@ app.use(requestFile())
 
 // app.socket = socket
 
-const router = require("./routes")
-
-app.use(router)
+app.use("/", require("./routes"))
 app.listen(process.env.APP_PORT)
 // http.listen(process.env.APP_PORT)
